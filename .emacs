@@ -1,4 +1,3 @@
-(setq default-directory "~/")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Version check.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7,6 +6,12 @@
 
 (setenv "PATH" (concat (getenv "PATH") ":/bin"))
 (setq exec-path (append exec-path '("/bin")))
+(setq default-directory "~/")
+(setq make-backup-files nil)
+
+; use emacs ls for dired
+(setq ls-lisp-use-insert-directory-program nil)
+(require 'ls-lisp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Packaging setup.
@@ -20,29 +25,29 @@
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/"))
 
-(defvar my-packages '(evil
+(defvar my-packages '(ag
+              auto-complete
+		      cider
+		      elscreen ace-jump-mode
+              evil
 		      evil-leader
-		      evil-tabs
+		      evil-nerd-commenter
 		      evil-paredit
 		      evil-surround
-		      evil-nerd-commenter
-		      elscreen ace-jump-mode
+		      evil-tabs
+		      expand-region
 		      helm helm-descbinds
 		      key-chord
-		      expand-region
-		      recentf smart-mode-line
-		      rainbow-delimiters highlight
-		      paredit smartparens
-		      powerline-evil
-		      powerline
-		      auto-complete
-		      cider
-		      nrepl-eval-sexp-fu
 		      magit
-		      smooth-scrolling
+		      nrepl-eval-sexp-fu
+		      paredit smartparens
+		      powerline
+		      powerline-evil
+		      rainbow-delimiters highlight
+		      recentf smart-mode-line
 		      rust-mode
-              ag
-		     )
+		      smooth-scrolling
+              )
 "A list of packages to check for and install at launch.")
 
 (defun my-missing-packages ()
@@ -172,6 +177,9 @@
 ; no backups
 (setq make-backup-files nil)
 
+; ignore bell
+(setq ring-bell-function 'ignore)
+
 ; save cursors location
 (setq save-place-file "~/.emacs.d/saveplace")
 (setq-default save-place t)
@@ -179,6 +187,7 @@
 
 (require 'expand-region)
 (global-set-key (kbd "C-'") 'er/expand-region)
+(global-set-key (kbd "M-'") 'er/expand-region)
 
 (helm-mode t)
 (helm-descbinds-mode t)
